@@ -1,13 +1,12 @@
-body{
+body {
     background-color: black;
 }
 
 .grid {
-    width:480px;
-    height:450px;
-    border: solid white 1px;
-    display:flex;
-    flex-wrap:wrap;
+    width: 480px;
+    height: 450px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .grid div {
@@ -16,6 +15,7 @@ body{
     border: solid blue 1px;
 }
 
-.corridor{
+.grid div.corridor {
     border: none;
+    background-color: black; /* Optional: Set the background to match the grid background */
 }
