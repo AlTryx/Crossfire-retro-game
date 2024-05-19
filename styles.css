@@ -19,6 +19,6 @@ body {
 }
 
 .grid div.corridor {
-    border: none;
+    border: black 1px solid;
     background-color: black; /* Optional: Set the background to match the grid background */
 }
