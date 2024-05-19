@@ -1,4 +1,21 @@
 body{
-    display: flex;
+    background-color: black;
+}
+
+.grid {
+    width:480px;
+    height:450px;
+    border: solid white 1px;
+    display:flex;
     flex-wrap:wrap;
+}
+
+.grid div {
+    width: 30px;
+    height: 30px;
+    border: solid blue 1px;
+}
+
+.corridor{
+    border: none;
 }
