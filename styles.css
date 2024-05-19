@@ -22,3 +22,9 @@ body {
     border: black 1px solid;
     background-color: black; /* Optional: Set the background to match the grid background */
 }
+
+.grid div.laser{
+    width: 8px;
+    height: 8px;
+    background-color: orangered;
+}

@@ -2,7 +2,7 @@
     const resultDisplay = document.querySelector('.result')
     const width = 30;
     const corridor = document.querySelector('.corridor')
-   
+    const laserIndex = document.querySelector('.laser')
 
     //draw the grid
     for(let i = 0; i < 195; i++) {
@@ -31,6 +31,21 @@
             }
         }
     }
+
     drawCorridors()
 
-    //
+    // drawing the player
+
+    function drawPlayer() {
+
+    }
+
+
+    
+    // drawing the laser
+
+    const drawLaser = function drawLaserFunction() {
+        // I've got to add class lIst of ('.laser) once every 1 - 3 s (I've got to set timeInterval for this function to occur!)
+    }
+
+    setInterval(drawLaser, 2000)
