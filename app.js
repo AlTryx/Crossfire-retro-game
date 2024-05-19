@@ -15,7 +15,7 @@
     // draw the corridors
     function drawCorridors(){
         for(let i = 0; i<squares.length;i++) {
-            if(i%2 !== 0 && i<14) {
+            if((i%2 !== 0 && i<14)) {
                 squares[i].classList.add('corridor')
             }
         }

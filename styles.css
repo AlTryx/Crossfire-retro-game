@@ -3,6 +3,9 @@ body {
 }
 
 .grid {
+    position: absolute;
+    top: 25%;
+    left:40%;
     width: 480px;
     height: 450px;
     display: flex;
