@@ -25,7 +25,6 @@
             (i>105 && i <119) ||
             (i>135 && i<149) ||
             (i>165 && i<179)
-        
         ) 
             {
                 squares[i].classList.add('corridor')
@@ -33,3 +32,5 @@
         }
     }
     drawCorridors()
+
+    //
