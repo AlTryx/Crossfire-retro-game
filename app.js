@@ -3,6 +3,7 @@
     const width = 30;
     const corridor = document.querySelector('.corridor')
     const laserIndex = document.querySelector('.laser')
+    let player
 
     //draw the grid
     for(let i = 0; i < 195; i++) {
@@ -37,7 +38,7 @@
     // drawing the player
 
     function drawPlayer() {
-
+        
     }
 
 
