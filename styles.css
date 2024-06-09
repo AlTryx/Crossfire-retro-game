@@ -28,3 +28,7 @@ body {
     height: 8px;
     background-color: orangered;
 }
+
+.player {
+    background-image:url('player1.png')
+}
