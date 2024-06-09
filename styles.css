@@ -30,5 +30,6 @@ body {
 }
 
 .player {
-    background-image:url('player1.png')
+    background-image: url('player1.png');
+    background-size:contain;
 }

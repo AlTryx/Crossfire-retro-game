@@ -4,6 +4,7 @@
     const laserIndex = document.querySelector('.laser')
     const width = 30
     let player
+    let currentPlayerIndex
 
     //draw the grid
     for(let i = 0; i < 195; i++) {
@@ -39,10 +40,8 @@
 
 
     // drawing the player
-
-    function drawPlayer() {
-        
-    }
+        currentPlayerIndex = 166
+        squares[currentPlayerIndex].classList.add('player')
 
     //move the player
 
