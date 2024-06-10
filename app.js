@@ -83,6 +83,9 @@
 
     document.addEventListener('keyup', movePlayer)
 
+
+
+
     //drawing the enemy
     
     function drawEnemy() {
@@ -97,7 +100,7 @@
 
     setInterval(drawLaser, 2000)
 
-    // I got came up with an idea that the player can "hide" in the walls for a short amount of time so they can hide from enemies. If they last longer than the timer for hiding, the game is over.
+    // I came up with an idea that the player can "hide" in the walls for a short amount of time so they can hide from enemies. If they last longer than the timer for hiding, the game is over.
     // after the player escape the hiding spot, the hiding area gets the class of 'used-hiding-spot' and it turns RED! which means you can't hide there anymore. There's a cooldown before you can hide anywhere again.
     // the enemies will grow stronger as the time passes and the score builds higher.
     //game win - a certain amount of score or until timer ends
