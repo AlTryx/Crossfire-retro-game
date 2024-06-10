@@ -15,6 +15,9 @@ body {
 .grid div {
     width: 30px;
     height: 30px;
+}
+
+.box {
     border: solid blue 1px;
 }
 
@@ -38,6 +41,6 @@ body {
 
 }
 
-.used-hiding-spot {
+div .used-hiding-spot {
 border: solid red 1px;
 }
