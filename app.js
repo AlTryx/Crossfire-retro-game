@@ -40,6 +40,7 @@
 
 
     // drawing the player
+    
         currentPlayerIndex = 166
         squares[currentPlayerIndex].classList.add('player')
 

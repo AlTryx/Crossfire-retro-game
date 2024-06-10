@@ -33,3 +33,11 @@ body {
     background-image: url('player1.png');
     background-size:contain;
 }
+
+.hiding-timer {
+
+}
+
+.used-hiding-spot {
+border: solid orangered 1px;
+}
