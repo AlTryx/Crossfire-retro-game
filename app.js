@@ -3,6 +3,7 @@
     const corridor = document.querySelector('.corridor')
     const laserIndex = document.querySelector('.laser')
     const width = 15
+    const height = 13
     let player
     let currentPlayerIndex
 
@@ -73,7 +74,7 @@
                 break
 
             case 'ArrowDown':
-                if (currentPlayerIndex + width < width*width) {
+                if (currentPlayerIndex + width < width*height) {
                     squares[currentPlayerIndex].classList.remove('player')
                     squares[currentPlayerIndex += width]
                     squares[currentPlayerIndex].classList.add('player')
