@@ -75,12 +75,12 @@ document.addEventListener('keyup', movePlayer)
 
 //drawing the enemy
 function drawEnemy() {
-    // Implement enemy drawing logic here
+    // enemy drawing logic here
 }
 
 // drawing the laser
 const drawLaser = function drawLaserFunction() {
-    // Implement laser drawing logic here
+    // laser drawing logic here
 }
 
 setInterval(drawLaser, 2000)
