@@ -4,6 +4,8 @@ const width = 15
 const height = 13
 let currentPlayerIndex
 let previousPlayerIndex
+let hidingTimeout
+let hidingCounter
 
 //draw the grid
 for (let i = 0; i < 195; i++) {
@@ -71,9 +73,51 @@ function movePlayer(e) {
     }
     
     squares[currentPlayerIndex].classList.add('player')
+    hidingTimer()
 }
 
 document.addEventListener('keyup', movePlayer)
+
+
+//handler of timing when the player is INSIDE a box containing 'used-hiding-spot'
+
+function hidingTimer() {
+    if(hidingTimeout) {
+        clearTimeout(hidingTimeout)
+        hidingTimeout = null
+    }
+
+    if(hidingCounter) {
+        clearInterval(hidingCounter) 
+        hidingCounter = null
+    }
+
+    //check if the player is in a box
+    if(squares[currentPlayerIndex].classList.contains('box', 'player')) {
+        let counter = 5
+        resultDisplay.textContent = `You have ${counter} seconds to hide`
+        hidingCounter = setInterval(() => {
+            counter--
+            resultDisplay.textContent = `You have ${counter} seconds to hide`
+            if(counter === 0) {
+                clearInterval(hidingCounter)
+            }
+        }
+        , 1000) // 1 second
+        hidingTimeout = setTimeout(() => {
+            gameOver()
+        }, 5000) // 5 seconds
+    }
+  
+}
+
+
+
+
+// I need to check when the .player and .box are classes of the same div
+// then start timer for 5s of hiding (the timer needs to be displayed on the doc)
+//then trigger function gameOver()
+
 
 //drawing the enemy
 function drawEnemy() {
@@ -87,6 +131,17 @@ const drawLaser = function drawLaserFunction() {
 
 setInterval(drawLaser, 2000)
 
+
+//game over check
+function gameOver() {
+    resultDisplay.textContent = 'Game Over'
+    document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
+}
+
+//win check
+function gameWin() {
+
+}
     // I came up with an idea that the player can "hide" in the walls for a short amount of time so they can hide from enemies. If they last longer than the timer for hiding, the game is over.
     // after the player escape the hiding spot, the hiding area gets the class of 'used-hiding-spot' and it turns RED! which means you can't hide there anymore. There's a cooldown before you can hide anywhere again.
     // the enemies will grow stronger as the time passes and the score builds higher.

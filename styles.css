@@ -44,3 +44,8 @@ body {
 div .used-hiding-spot {
 border: solid red 1px;
 }
+
+h1 {
+color: white;
+font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
