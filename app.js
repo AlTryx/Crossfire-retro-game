@@ -43,25 +43,27 @@ squares[currentPlayerIndex].classList.add('player')
 function movePlayer(e) {
     previousPlayerIndex = currentPlayerIndex
     squares[currentPlayerIndex].classList.remove('player')
+   
+        switch (e.key) {
+            case 'ArrowLeft':
+                if (currentPlayerIndex % width !== 0 && !squares[currentPlayerIndex - 1].classList.contains('used-hiding-spot')) 
+                    currentPlayerIndex -= 1
+                break
+            case 'ArrowRight':
+                if (currentPlayerIndex % width < width - 1 && !squares[currentPlayerIndex + 1].classList.contains('used-hiding-spot')) 
+                    currentPlayerIndex += 1
+                break
+            case 'ArrowUp':
+                if (currentPlayerIndex - width >= 0 && !squares[currentPlayerIndex - width].classList.contains('used-hiding-spot')) 
+                    currentPlayerIndex -= width
+                break
+            case 'ArrowDown':
+                if (currentPlayerIndex + width < width * height && !squares[currentPlayerIndex + width].classList.contains('used-hiding-spot')) 
+                    currentPlayerIndex += width
+                break
+        }
     
-    switch (e.key) {
-        case 'ArrowLeft':
-            if (currentPlayerIndex % width !== 0) 
-                currentPlayerIndex -= 1
-            break
-        case 'ArrowRight':
-            if (currentPlayerIndex % width < width - 1) 
-                currentPlayerIndex += 1
-            break
-        case 'ArrowUp':
-            if (currentPlayerIndex - width >= 0) 
-                currentPlayerIndex -= width
-            break
-        case 'ArrowDown':
-            if (currentPlayerIndex + width < width * height) 
-                currentPlayerIndex += width
-            break
-    }
+    
 
     if (squares[previousPlayerIndex].classList.contains('box')) {
         squares[previousPlayerIndex].classList.remove('box')
