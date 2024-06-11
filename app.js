@@ -108,6 +108,9 @@ function hidingTimer() {
             gameOver()
         }, 5000) // 5 seconds
     }
+    else {
+        resultDisplay.textContent = ' '
+    }
   
 }
 
