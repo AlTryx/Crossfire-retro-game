@@ -114,14 +114,6 @@ function hidingTimer() {
   
 }
 
-
-
-
-// I need to check when the .player and .box are classes of the same div
-// then start timer for 5s of hiding (the timer needs to be displayed on the doc)
-//then trigger function gameOver()
-
-
 //drawing the enemy
 function drawEnemy() {
     // enemy drawing logic here
