@@ -136,7 +136,7 @@ class Enemy {
 
 
 const enemies = [
-    new Enemy ('')
+    new Enemy ('Reaper', 
 ]
 //drawing the enemy
 function drawEnemy() {
