@@ -16,7 +16,7 @@ for (let i = 0; i < 195; i++) {
 
 const squares = Array.from(document.querySelectorAll('.grid div'))
 
-//framing the secret spawner for enemies 
+// the secret spawner for enemies 
 
     for(let i = 0; i < 15; i++) {
         squares[i].classList.remove('box')
@@ -122,9 +122,26 @@ function hidingTimer() {
   
 }
 
+// constructor for enemies
+class Enemies {
+    constructor(className, startIndex, speed) {
+        this.className = className
+        this.startIndex = startIndex
+        this.speed = speed
+        this.currentIndex = startIndex
+        this.timerId = NaN
+    }
+}
+
+
+
+enemies = [
+
+]
 //drawing the enemy
 function drawEnemy() {
     // enemy drawing logic here
+
 }
 
 // drawing the laser
