@@ -16,6 +16,14 @@ for (let i = 0; i < 195; i++) {
 
 const squares = Array.from(document.querySelectorAll('.grid div'))
 
+//framing the secret spawner for enemies 
+
+    for(let i = 0; i < 15; i++) {
+        squares[i].classList.remove('box')
+        squares[i].classList.add('secret-spawner')
+    }
+
+
 // draw the corridors
 function drawCorridors() {
     for (let i = 0; i < squares.length; i++) {

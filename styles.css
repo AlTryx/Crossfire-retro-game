@@ -31,6 +31,9 @@ body {
     height: 8px;
     background-color: orangered;
 }
+.secret-spawner {
+    border: black 1px solid;
+}
 
 .player {
     background-image: url('player1.png');
