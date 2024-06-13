@@ -136,14 +136,15 @@ class Enemy {
 
 
 const enemies = [
-    new Enemy ('Reaper', 13, 200),
-    new Enemy('Ghost', 9, 350)
+    new Enemy ('alien', 13, 200),
+    new Enemy('ghost', 9, 350)
 ]
 //drawing the enemy
-function drawEnemy() {
-    // enemy drawing logic here
+enemies.forEach(enemy =>
+    squares[enemy.currentIndex].classList.add('enemy', enemy.className)
+)
 
-}
+
 
 // drawing the laser
 const drawLaser = function drawLaserFunction() {
