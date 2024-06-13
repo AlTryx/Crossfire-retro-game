@@ -37,7 +37,7 @@ body {
 
 .player {
     background-image: url('player1.png');
-    background-size:contain;
+    background-size: contain;
 }
 
 .hiding-timer {
@@ -50,7 +50,7 @@ border: solid red 1px;
 
 h1 {
 color: white;
-font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .enemy {
@@ -58,9 +58,11 @@ font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .ghost {
-
+    background-image: url('ghost.png');
+    background-size: cover;
 }
 
 .alien {
-
+    background-image:url('alien.png');
+    background-size: cover;
 }
