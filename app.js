@@ -123,7 +123,7 @@ function hidingTimer() {
 }
 
 // constructor for enemies
-class Enemies {
+class Enemy {
     constructor(className, startIndex, speed) {
         this.className = className
         this.startIndex = startIndex
@@ -135,8 +135,8 @@ class Enemies {
 
 
 
-enemies = [
-
+const enemies = [
+    new Enemy ('')
 ]
 //drawing the enemy
 function drawEnemy() {
