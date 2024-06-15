@@ -173,3 +173,5 @@ function gameWin() {
     // the enemies will grow stronger as the time passes and the score builds higher.
     //game win - a certain amount of score or until timer ends
     //game loss - if being killed by an enemy or remain hiding for more than 5s.
+    //score increases as I catch power-pellets inside the boxes
+    //a new enemy will be added - called "Blub" - It's ability will be that it can create copies of itself and it stuns if it shoots the player for 5s
