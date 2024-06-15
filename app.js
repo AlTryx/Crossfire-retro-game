@@ -145,7 +145,6 @@ enemies.forEach(enemy =>
 )
 
 
-
 // drawing the laser
 const drawLaser = function drawLaserFunction() {
     // laser drawing logic here
