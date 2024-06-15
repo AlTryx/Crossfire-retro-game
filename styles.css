@@ -45,6 +45,11 @@ body {
     background-size: contain;
 }
 
+.dead-player{
+    background-image:url('exploded_player1.png');
+    background-size: contain;
+}
+
 .hiding-timer {
 
 }

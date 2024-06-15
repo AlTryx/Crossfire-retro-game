@@ -162,6 +162,8 @@ setInterval(drawLaser, 2000)
 function gameOver() {
         resultDisplay.textContent = 'Game Over'
         document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
+        squares[currentPlayerIndex].classList.remove('player')
+        squares[currentPlayerIndex].classList.add('dead-player') // changing the normal ship image to an exploded version of the ship
 }
 
 //win check
