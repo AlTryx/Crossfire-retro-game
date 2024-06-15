@@ -139,6 +139,7 @@ const enemies = [
     new Enemy ('alien', 13, 200),
     new Enemy('ghost', 9, 350)
 ]
+
 //drawing the enemy
 enemies.forEach(enemy =>
     squares[enemy.currentIndex].classList.add('enemy', enemy.className)
@@ -163,8 +164,6 @@ function gameOver() {
 function gameWin() {
 
 }
-    // I came up with an idea that the player can "hide" in the walls for a short amount of time so they can hide from enemies. If they last longer than the timer for hiding, the game is over.
-    // after the player escape the hiding spot, the hiding area gets the class of 'used-hiding-spot' and it turns RED! which means you can't hide there anymore. There's a cooldown before you can hide anywhere again.
     // the enemies will grow stronger as the time passes and the score builds higher.
     //game win - a certain amount of score or until timer ends
-    //game loss - if being killed by an enemy.
+    //game loss - if being killed by an enemy or remain hiding for more than 5s.
