@@ -57,8 +57,17 @@ h1 {
 color: white;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 text-align: center;
+margin: 0;
 }
 
+.result {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 80px; /* Adjust based on the text height */
+    width: 100%; /* Adjust based on your layout */
+    text-align: center; /* Center text horizontally */
+    margin-top: 10px; /* Add some spacing between the grid and the result display */
+}
 .enemy {
 
 }

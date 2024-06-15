@@ -6,6 +6,7 @@ let currentPlayerIndex
 let previousPlayerIndex
 let hidingTimeout
 let hidingCounter
+let isDead = false
 
 //draw the grid
 for (let i = 0; i < 195; i++) {
@@ -18,9 +19,10 @@ const squares = Array.from(document.querySelectorAll('.grid div'))
 
 // the secret spawner for enemies 
 
-    for(let i = 0; i < 15; i++) {
+    for(let i = 0; i < 29; i++) {
         squares[i].classList.remove('box')
         squares[i].classList.add('secret-spawner')
+        squares[i].id = i
     }
 
 
@@ -73,7 +75,6 @@ function movePlayer(e) {
                 break
         }
     
-    
 
     if (squares[previousPlayerIndex].classList.contains('box')) {
         squares[previousPlayerIndex].classList.remove('box')
@@ -82,6 +83,10 @@ function movePlayer(e) {
     
     squares[currentPlayerIndex].classList.add('player')
     hidingTimer()
+
+    if(squares[currentPlayerIndex].classList.contains('secret-spawner')) {
+        gameOver()
+    }
 }
 
 document.addEventListener('keyup', movePlayer)
@@ -155,8 +160,8 @@ setInterval(drawLaser, 2000)
 
 //game over check
 function gameOver() {
-    resultDisplay.textContent = 'Game Over'
-    document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
+        resultDisplay.textContent = 'Game Over'
+        document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
 }
 
 //win check
