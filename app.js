@@ -10,6 +10,7 @@ let hidingCounter
 let isDead = false
 let enemyMoves = false
 let playerStunned = false
+let score = 0
 
 //draw the grid
 for (let i = 0; i < 195; i++) {
@@ -53,6 +54,9 @@ drawCorridors()
 // drawing the player
 currentPlayerIndex = 166
 squares[currentPlayerIndex].classList.add('player')
+
+// drawing the score
+scoreDisplay.textContent = score;
 
 // move the player
 function movePlayer(e) {
@@ -220,6 +224,7 @@ setInterval(drawLaser, 2000)
 //game over check
 function gameOver() {
         resultDisplay.textContent = `Game Over! - Your score is: ${score}`
+        setTimeout(function() {alert('Game Over! ' + score)}, 500)
         enemies.forEach(enemy => clearInterval(enemy.timerId))
         isDead = true
         document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
