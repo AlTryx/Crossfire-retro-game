@@ -134,7 +134,6 @@ class Enemy {
 }
 
 
-
 const enemies = [
     new Enemy ('alien', 13, 200),
     new Enemy('ghost', 9, 350)
