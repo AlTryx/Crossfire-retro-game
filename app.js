@@ -1,5 +1,6 @@
 const grid = document.querySelector('.grid')
 const resultDisplay = document.querySelector('.result')
+const scoreDisplay = document.querySelector('.scoreContent')
 const width = 15
 const height = 13
 let currentPlayerIndex
@@ -7,6 +8,8 @@ let previousPlayerIndex
 let hidingTimeout
 let hidingCounter
 let isDead = false
+let enemyMoves = false
+let playerStunned = false
 
 //draw the grid
 for (let i = 0; i < 195; i++) {
@@ -135,24 +138,80 @@ class Enemy {
         this.speed = speed
         this.currentIndex = startIndex
         this.timerId = NaN
+        this.targetIndex = currentPlayerIndex; //the enemy aims to kill the player
     }
 }
 
 
 const enemies = [
     new Enemy ('alien', 13, 200),
-    new Enemy('ghost', 9, 350)
+    new Enemy('ghost', 9, 150),
+    new Enemy('virus', 5, 400),
+    new Enemy('blob', 1, 200)
 ]
 
-//drawing the enemy
+// drawing the enemy
 enemies.forEach(enemy =>
     squares[enemy.currentIndex].classList.add('enemy', enemy.className)
 )
 
 
+
+function moveEnemy(enemy) {
+    let directions = [1, -1, width, -width];
+
+    function getRandomDirection() {
+        return directions[Math.floor(Math.random() * directions.length)]; // the formula for random Direction
+    }
+
+    let direction = getRandomDirection();
+
+    function move() {
+        enemy.timerId = setInterval(function() {
+            // pick a new direction that's different from the previous one
+            let newDirection;
+            do {
+                newDirection = getRandomDirection();
+            } while (newDirection === -direction); // Проверка за обратно направление
+
+            direction = newDirection;
+
+            const nextPosition = enemy.currentIndex + direction;
+
+            // check if the next position is NOT an enemy or a box
+            if (
+                nextPosition >= 0 && 
+                nextPosition < width * height && 
+                (squares[nextPosition].classList.contains('corridor') || 
+                squares[nextPosition].classList.contains('secret-spawner')) &&
+                !squares[nextPosition].classList.contains('enemy')
+            ) {
+                // move the enemy to the new direction
+                squares[enemy.currentIndex].classList.remove('enemy', enemy.className);
+                enemy.currentIndex = nextPosition;
+                squares[enemy.currentIndex].classList.add('enemy', enemy.className);
+            }
+
+            // check for game over
+            if (squares[enemy.currentIndex].classList.contains('player')) {
+                gameOver();
+            }
+        }, enemy.speed);
+    }
+
+    move();
+}
+
+
+
+// Initialize enemies and start their movement
+enemies.forEach(enemy => moveEnemy(enemy));
+
+
 // drawing the laser
 const drawLaser = function drawLaserFunction() {
     // laser drawing logic here
+    //laser will be shoot ONLY from ghost and alien (blob will have a stun laser instead)
 }
 
 setInterval(drawLaser, 2000)
@@ -160,7 +219,9 @@ setInterval(drawLaser, 2000)
 
 //game over check
 function gameOver() {
-        resultDisplay.textContent = 'Game Over'
+        resultDisplay.textContent = `Game Over! - Your score is: ${score}`
+        enemies.forEach(enemy => clearInterval(enemy.timerId))
+        isDead = true
         document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
         squares[currentPlayerIndex].classList.remove('player')
         squares[currentPlayerIndex].classList.add('dead-player') // changing the normal ship image to an exploded version of the ship
@@ -168,10 +229,16 @@ function gameOver() {
 
 //win check
 function gameWin() {
+if(
+    (scoreDisplay === 500) 
+
+) {
+
+}
 
 }
     // the enemies will grow stronger as the time passes and the score builds higher.
     //game win - a certain amount of score or until timer ends
     //game loss - if being killed by an enemy or remain hiding for more than 5s.
     //score increases as I catch power-pellets inside the boxes
-    //a new enemy will be added - called "Blub" - It's ability will be that it can create copies of itself and it stuns if it shoots the player for 5s
+    //a new enemy will be added - called "Blob" - It's ability will be that it can create copies of itself and it stuns if it shoots the player for 5s
