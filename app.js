@@ -242,7 +242,6 @@ if(
 }
 
 }
-    // the enemies will grow stronger as the time passes and the score builds higher.
     //game win - a certain amount of score or until timer ends
     //game loss - if being killed by an enemy or remain hiding for more than 5s.
     //score increases as I catch power-pellets inside the boxes
