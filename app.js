@@ -217,6 +217,10 @@ const drawLaser = function drawLaserFunction() {
     //laser will be shoot ONLY from ghost and alien (blob will have a stun laser instead)
 }
 
+function drawStunLaser() {
+    
+}
+
 setInterval(drawLaser, 2000)
 
 
