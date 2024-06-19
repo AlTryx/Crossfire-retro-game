@@ -160,7 +160,6 @@ enemies.forEach(enemy =>
 )
 
 
-
 function moveEnemy(enemy) {
     let directions = [1, -1, width, -width];
 
