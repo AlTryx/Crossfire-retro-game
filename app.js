@@ -3,7 +3,6 @@ const resultDisplay = document.querySelector('.result')
 const scoreDisplay = document.querySelector('.scoreContent')
 const width = 15
 const height = 13
-const powerPelletSpawnSpeed = 10000
 let currentPlayerIndex
 let previousPlayerIndex
 let hidingTimeout
@@ -12,6 +11,8 @@ let isDead = false
 let enemyMoves = false
 let playerStunned = false
 let score = 0
+let powerPelletInterval
+let powerPelletIndex
 
 //draw the grid
 for (let i = 0; i < 195; i++) {
@@ -23,20 +24,17 @@ for (let i = 0; i < 195; i++) {
 const squares = Array.from(document.querySelectorAll('.grid div'))
 
 // the secret spawner for enemies 
+for (let i = 0; i <= 29; i++) {
+    squares[i].classList.remove('box')
+    squares[i].classList.add('secret-spawner')
+    squares[i].id = i
 
-    for(let i = 0; i <= 29; i++) {
-        squares[i].classList.remove('box')
-        squares[i].classList.add('secret-spawner')
-        squares[i].id = i
-
-        //draw the walls
-        squares[0].classList.add('wall')
-        squares[14].classList.add('wall')
-        squares[15].classList.add('wall')
-        squares[29].classList.add('wall')
-    }
-
-
+    //draw the walls
+    squares[0].classList.add('wall')
+    squares[14].classList.add('wall')
+    squares[15].classList.add('wall')
+    squares[29].classList.add('wall')
+}
 
 // draw the corridors
 function drawCorridors() {
@@ -71,25 +69,24 @@ function movePlayer(e) {
     previousPlayerIndex = currentPlayerIndex
     squares[currentPlayerIndex].classList.remove('player')
    
-        switch (e.key) {
-            case 'ArrowLeft':
-                if (currentPlayerIndex % width !== 0 && !squares[currentPlayerIndex - 1].classList.contains('used-hiding-spot')) 
-                    currentPlayerIndex -= 1
-                break
-            case 'ArrowRight':
-                if (currentPlayerIndex % width < width - 1 && !squares[currentPlayerIndex + 1].classList.contains('used-hiding-spot')) 
-                    currentPlayerIndex += 1
-                break
-            case 'ArrowUp':
-                if (currentPlayerIndex - width >= 0 && !squares[currentPlayerIndex - width].classList.contains('used-hiding-spot')) 
-                    currentPlayerIndex -= width
-                break
-            case 'ArrowDown':
-                if (currentPlayerIndex + width < width * height && !squares[currentPlayerIndex + width].classList.contains('used-hiding-spot')) 
-                    currentPlayerIndex += width
-                break
-        }
-    
+    switch (e.key) {
+        case 'ArrowLeft':
+            if (currentPlayerIndex % width !== 0 && !squares[currentPlayerIndex - 1].classList.contains('used-hiding-spot')) 
+                currentPlayerIndex -= 1
+            break
+        case 'ArrowRight':
+            if (currentPlayerIndex % width < width - 1 && !squares[currentPlayerIndex + 1].classList.contains('used-hiding-spot')) 
+                currentPlayerIndex += 1
+            break
+        case 'ArrowUp':
+            if (currentPlayerIndex - width >= 0 && !squares[currentPlayerIndex - width].classList.contains('used-hiding-spot')) 
+                currentPlayerIndex -= width
+            break
+        case 'ArrowDown':
+            if (currentPlayerIndex + width < width * height && !squares[currentPlayerIndex + width].classList.contains('used-hiding-spot')) 
+                currentPlayerIndex += width
+            break
+    }
 
     if (squares[previousPlayerIndex].classList.contains('box')) {
         squares[previousPlayerIndex].classList.remove('box')
@@ -99,16 +96,21 @@ function movePlayer(e) {
     squares[currentPlayerIndex].classList.add('player')
     hidingTimer()
 
+    // Check for power-pellet pickup
+    if (squares[currentPlayerIndex].classList.contains('power-pellet')) {
+        pickUpPellet()
+    }
+
     if(squares[currentPlayerIndex].classList.contains('secret-spawner')) {
         gameOver()
     }
+
+    checkAllBoxesUsed()
 }
 
 document.addEventListener('keyup', movePlayer)
 
-
 //handler of timing when the player is INSIDE a box containing 'used-hiding-spot'
-
 function hidingTimer() {
     if(hidingTimeout) {
         clearTimeout(hidingTimeout)
@@ -135,11 +137,9 @@ function hidingTimer() {
         hidingTimeout = setTimeout(() => {
             gameOver()
         }, 5000) // 5 seconds
-    }
-    else {
+    } else {
         resultDisplay.textContent = ' '
     }
-  
 }
 
 // constructor for enemies
@@ -150,10 +150,9 @@ class Enemy {
         this.speed = speed
         this.currentIndex = startIndex
         this.timerId = NaN
-        this.targetIndex = currentPlayerIndex; //the enemy aims to kill the player
+        this.targetIndex = currentPlayerIndex //the enemy aims to kill the player
     }
 }
-
 
 const enemies = [
     new Enemy ('alien', 13, 200),
@@ -166,7 +165,6 @@ const enemies = [
 enemies.forEach(enemy =>
     squares[enemy.currentIndex].classList.add('enemy', enemy.className)
 )
-
 
 function moveEnemy(enemy) {
     let directions = [1, -1, width, -width]
@@ -185,9 +183,9 @@ function moveEnemy(enemy) {
                 newDirection = getRandomDirection()
             } while (newDirection === -direction)
 
-            direction = newDirection;
+            direction = newDirection
 
-            const nextPosition = enemy.currentIndex + direction;
+            const nextPosition = enemy.currentIndex + direction
 
             // check if the next position is NOT an enemy or a box
             if (
@@ -200,7 +198,7 @@ function moveEnemy(enemy) {
             ) &&
                 !squares[nextPosition].classList.contains('enemy') &&
                 // prevent moving from 14 to 15 and opposite
-                !((enemy.currentIndex === 14 && direction === 1) || (enemy.currentIndex === 15 && direction === -1)) 
+                !((enemy.currentIndex === 14 && direction === 1) || (enemy.currentIndex === 15 && direction === -1))
             ) {
                 // move the enemy to the new direction
                 squares[enemy.currentIndex].classList.remove('enemy', enemy.className)
@@ -210,62 +208,90 @@ function moveEnemy(enemy) {
 
             // check for game over
             if (squares[enemy.currentIndex].classList.contains('player')) {
-                gameOver();
+                gameOver()
             }
-        }, enemy.speed);
+        }, enemy.speed)
     }  
-        move();
-    
-    
+    move()
 }
-
 
 // Initialize enemies and start their movement
 enemies.forEach(enemy => moveEnemy(enemy))
 
-//power-pellets
-const powerPellet = [
-    timerId,
-    currentIndex
-]
-
+// Function to draw power-pellet
 function drawPowerPellet() {
-    powerPellet.timerId = setInterval(function() {
+    if (powerPelletInterval) {
+        clearInterval(powerPelletInterval)
+    }
 
-        // draw the pellet with mathRandom between every (blue) box inside the squares
-        powerPellet.currentIndex = [Math.floor(Math.random() * squares['box'])]
+    powerPelletInterval = setInterval(() => {
+        // Remove any existing power-pellet
+        if (powerPelletIndex !== undefined) {
+            squares[powerPelletIndex].classList.remove('power-pellet')
+        }
+
+        // Draw the pellet at a random box that is not a used-hiding-spot
+        let boxIndices = squares
+            .map((square, index) => 
+                square.classList.contains('box') && 
+                !square.classList.contains('used-hiding-spot') 
+                ? index 
+                : null)
+            .filter(index => index !== null)
         
-    }, powerPelletSpawnSpeed) // it will spawn every 10 sec
+        if (boxIndices.length > 0) {
+            powerPelletIndex = boxIndices[Math.floor(Math.random() * boxIndices.length)]
+            squares[powerPelletIndex].classList.add('power-pellet')
+        }
+}, 10000) // it will spawn every 10 sec
 }
 
-//what happens if the player picks up the pellet
+// what happens if the player picks up the pellet
 function pickUpPellet() {
-    if(currentPlayerIndex === powerPellet.currentIndex) {
-        score += 20
+    squares[powerPelletIndex].classList.remove('power-pellet')
+    score += 20
+    enemies.speed -= 5
+    scoreDisplay.textContent = score
+    clearInterval(powerPelletInterval)
+    drawPowerPellet()
+}
+
+// Start drawing power-pellets
+drawPowerPellet()
+
+//functions that checks if all boxes are used hiding spots => game over
+
+function checkAllBoxesUsed() {
+    const allUsed = squares.every(square =>
+        !square.classList.contains('box') ||
+        square.classList.contains('used-hiding-spot')
+    )
+    if(allUsed) {
+        gameOver()
     }
 }
 
 //game over check
 function gameOver() {
-        resultDisplay.textContent = `Game Over! - Your score is: ${score}`
-        setTimeout(function() {alert('Game Over! ' + score)}, 500)
-        enemies.forEach(enemy => clearInterval(enemy.timerId))
-        isDead = true
-        document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
-        squares[currentPlayerIndex].classList.remove('player')
-        squares[currentPlayerIndex].classList.add('dead-player') // changing the normal ship image to an exploded version of the ship
+    resultDisplay.textContent = `Game Over! - Your score is: ${score}`
+    setTimeout(function() {alert('Game Over! ' + score)}, 500)
+    enemies.forEach(enemy => clearInterval(enemy.timerId))
+    clearInterval(powerPelletInterval)
+    isDead = true
+    document.removeEventListener('keyup', movePlayer) // Disable player movement on game over
+    squares[currentPlayerIndex].classList.remove('player')
+    squares[currentPlayerIndex].classList.add('dead-player') // changing the normal ship image to an exploded version of the ship
 }
 
 //win check
 function gameWin() {
-if(
-    (scoreDisplay === 500) 
-
-) {
-
+    if (scoreDisplay === 500) {
+        resultDisplay.textContent = `You Won! - Your score reached: ${score}`
+        setTimeout(function() {alert('You Won! ' + score)}, 500)
+        enemies.forEach(enemy => clearInterval(enemy.timerId))
+        clearInterval(powerPelletInterval)
+        document.removeEventListener('keyup', movePlayer)
+        squares[currentPlayerIndex].classList.remove('player')
+        squares[currentPlayerIndex].classList.add('winner-player')
+    }
 }
-
-}
-    //game win - a certain amount of score
-    //score increases as I catch power-pellets inside the boxes (+ 20 score ; 25 times should be repeated till win)
-    //if score increases => increment enemy.speed value

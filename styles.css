@@ -50,10 +50,6 @@ body {
     background-size: contain;
 }
 
-.hiding-timer {
-
-}
-
 div .used-hiding-spot {
 border: solid red 1px;
 }
@@ -110,5 +106,15 @@ margin: 0;
 }
 
 .wall {
-    
+
+}
+
+.power-pellet {
+    background-image: url('power-pellet.png');
+    background-size: cover;
+}
+
+.winner-player{
+    background-image:url('playerWinner.png');
+    background-size: cover;
 }
