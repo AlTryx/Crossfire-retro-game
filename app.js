@@ -211,19 +211,6 @@ function moveEnemy(enemy) {
 enemies.forEach(enemy => moveEnemy(enemy));
 
 
-// drawing the laser
-const drawLaser = function drawLaserFunction() {
-    // laser drawing logic here
-    //laser will be shoot ONLY from ghost and alien (blob will have a stun laser instead)
-}
-
-function drawStunLaser() {
-
-}
-
-setInterval(drawLaser, 2000)
-
-
 //game over check
 function gameOver() {
         resultDisplay.textContent = `Game Over! - Your score is: ${score}`
@@ -247,6 +234,4 @@ if(
 }
     //game win - a certain amount of score
     //score increases as I catch power-pellets inside the boxes
-    //a new enemy will be added - called "Blob" - It's ability will be that it can create copies of itself and it stuns if it shoots the player for 5s
-
     //I've got to fix an issue when they're moving at the secret-spawn location
