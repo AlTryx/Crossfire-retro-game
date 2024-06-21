@@ -3,6 +3,7 @@ const resultDisplay = document.querySelector('.result')
 const scoreDisplay = document.querySelector('.scoreContent')
 const width = 15
 const height = 13
+const powerPelletSpawnSpeed = 10000
 let currentPlayerIndex
 let previousPlayerIndex
 let hidingTimeout
@@ -168,10 +169,10 @@ enemies.forEach(enemy =>
 
 
 function moveEnemy(enemy) {
-    let directions = [1, -1, width, -width];
+    let directions = [1, -1, width, -width]
 
     function getRandomDirection() {
-        return directions[Math.floor(Math.random() * directions.length)]; // the formula for random Direction
+        return directions[Math.floor(Math.random() * directions.length)] // the formula for random Direction
     }
 
     let direction = getRandomDirection();
@@ -181,8 +182,8 @@ function moveEnemy(enemy) {
             // pick a new direction that's different from the previous one
             let newDirection;
             do {
-                newDirection = getRandomDirection();
-            } while (newDirection === -direction);
+                newDirection = getRandomDirection()
+            } while (newDirection === -direction)
 
             direction = newDirection;
 
@@ -202,9 +203,9 @@ function moveEnemy(enemy) {
                 !((enemy.currentIndex === 14 && direction === 1) || (enemy.currentIndex === 15 && direction === -1)) 
             ) {
                 // move the enemy to the new direction
-                squares[enemy.currentIndex].classList.remove('enemy', enemy.className);
-                enemy.currentIndex = nextPosition;
-                squares[enemy.currentIndex].classList.add('enemy', enemy.className);
+                squares[enemy.currentIndex].classList.remove('enemy', enemy.className)
+                enemy.currentIndex = nextPosition
+                squares[enemy.currentIndex].classList.add('enemy', enemy.className)
             }
 
             // check for game over
@@ -220,12 +221,28 @@ function moveEnemy(enemy) {
 
 
 // Initialize enemies and start their movement
-enemies.forEach(enemy => moveEnemy(enemy));
+enemies.forEach(enemy => moveEnemy(enemy))
 
 //power-pellets
+const powerPellet = [
+    timerId,
+    currentIndex
+]
 
 function drawPowerPellet() {
+    powerPellet.timerId = setInterval(function() {
 
+        // draw the pellet with mathRandom between every (blue) box inside the squares
+        powerPellet.currentIndex = [Math.floor(Math.random() * squares['box'])]
+        
+    }, powerPelletSpawnSpeed) // it will spawn every 10 sec
+}
+
+//what happens if the player picks up the pellet
+function pickUpPellet() {
+    if(currentPlayerIndex === powerPellet.currentIndex) {
+        score += 20
+    }
 }
 
 //game over check
