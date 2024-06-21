@@ -245,7 +245,7 @@ if(
 }
 
 }
-    //game win - a certain amount of score or until timer ends
+    //game win - a certain amount of score
     //score increases as I catch power-pellets inside the boxes
     //a new enemy will be added - called "Blob" - It's ability will be that it can create copies of itself and it stuns if it shoots the player for 5s
 
