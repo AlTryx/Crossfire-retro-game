@@ -23,11 +23,18 @@ const squares = Array.from(document.querySelectorAll('.grid div'))
 
 // the secret spawner for enemies 
 
-    for(let i = 0; i < 29; i++) {
+    for(let i = 0; i <= 29; i++) {
         squares[i].classList.remove('box')
         squares[i].classList.add('secret-spawner')
         squares[i].id = i
+
+        //draw the walls
+        squares[0].classList.add('wall')
+        squares[14].classList.add('wall')
+        squares[15].classList.add('wall')
+        squares[29].classList.add('wall')
     }
+
 
 
 // draw the corridors
@@ -168,14 +175,14 @@ function moveEnemy(enemy) {
     }
 
     let direction = getRandomDirection();
-
+    
     function move() {
         enemy.timerId = setInterval(function() {
             // pick a new direction that's different from the previous one
             let newDirection;
             do {
                 newDirection = getRandomDirection();
-            } while (newDirection === -direction); // Проверка за обратно направление
+            } while (newDirection === -direction);
 
             direction = newDirection;
 
@@ -183,11 +190,16 @@ function moveEnemy(enemy) {
 
             // check if the next position is NOT an enemy or a box
             if (
-                nextPosition >= 0 && 
-                nextPosition < width * height && 
-                (squares[nextPosition].classList.contains('corridor') || 
-                squares[nextPosition].classList.contains('secret-spawner')) &&
-                !squares[nextPosition].classList.contains('enemy')
+                nextPosition > 0 && 
+                nextPosition < width * height &&
+                (
+                    squares[nextPosition].classList.contains('wall') ||
+                    squares[nextPosition].classList.contains('corridor') || 
+                    squares[nextPosition].classList.contains('secret-spawner')
+            ) &&
+                !squares[nextPosition].classList.contains('enemy') &&
+                // prevent moving from 14 to 15 and opposite
+                !((enemy.currentIndex === 14 && direction === 1) || (enemy.currentIndex === 15 && direction === -1)) 
             ) {
                 // move the enemy to the new direction
                 squares[enemy.currentIndex].classList.remove('enemy', enemy.className);
@@ -200,16 +212,21 @@ function moveEnemy(enemy) {
                 gameOver();
             }
         }, enemy.speed);
-    }
-
-    move();
+    }  
+        move();
+    
+    
 }
-
 
 
 // Initialize enemies and start their movement
 enemies.forEach(enemy => moveEnemy(enemy));
 
+//power-pellets
+
+function drawPowerPellet() {
+
+}
 
 //game over check
 function gameOver() {
@@ -233,5 +250,5 @@ if(
 
 }
     //game win - a certain amount of score
-    //score increases as I catch power-pellets inside the boxes
-    //I've got to fix an issue when they're moving at the secret-spawn location
+    //score increases as I catch power-pellets inside the boxes (+ 20 score ; 25 times should be repeated till win)
+    //if score increases => increment enemy.speed value
